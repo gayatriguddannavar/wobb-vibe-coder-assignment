@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
-import type { FullUserProfile, ProfileDetailResponse } from "@/types";
+import type { FullUserProfile, ProfileDetailResponse, Platform } from "@/types";
 import { formatEngagementRate } from "@/utils/formatters";
 import { loadProfileByUsername } from "@/utils/profileLoader";
+import { useShortlistStore } from "@/store/useShortlistStore";
 
 function formatFollowersDetail(count: number) {
   if (count >= 1000000) return (count / 1000000).toFixed(2) + "M";
@@ -20,6 +21,7 @@ export function ProfileDetailPage() {
     null
   );
   const [loaded, setLoaded] = useState(false);
+  const { addToShortlist, removeFromShortlist, isShortlisted } = useShortlistStore();
 
   useEffect(() => {
     if (!username) return;
@@ -61,6 +63,7 @@ export function ProfileDetailPage() {
   }
 
   const user: FullUserProfile = profileData.data.user_profile;
+  const added = isShortlisted(user.user_id);
 
   return (
     <Layout title={user.fullname}>
@@ -150,12 +153,22 @@ export function ProfileDetailPage() {
 
           {/* TODO: candidates must implement Add to List feature */}
           {/* TODO: candidates must implement Add to List feature */}
-          <button
-            disabled
-            className="block mt-4 px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed"
-          >
-            Add to List
-          </button>
+        <button
+        onClick={() => {
+          if (added) {
+            removeFromShortlist(user.user_id);
+          } else {
+            addToShortlist(user, platform as Platform);
+          }
+        }}
+        className={`block mt-4 px-4 py-2 rounded text-sm ${
+          added
+            ? "bg-red-100 text-red-600 hover:bg-red-200"
+            : "bg-blue-600 text-white hover:bg-blue-700"
+        }`}
+      >
+        {added ? "Remove from List" : "Add to List"}
+      </button>
         </div>
       </div>
     </Layout>
