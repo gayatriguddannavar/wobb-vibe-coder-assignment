@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { VerifiedBadge } from "./VerifiedBadge";
+import { useShortlistStore } from "@/store/useShortlistStore";
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
@@ -22,10 +23,23 @@ export function ProfileCard({
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
+  const { addToShortlist, removeFromShortlist, isShortlisted } =
+    useShortlistStore();
+
+  const added = isShortlisted(profile.user_id);
 
   const handleClick = () => {
     if (onProfileClick) onProfileClick(profile.username);
     navigate(`/profile/${profile.username}?platform=${platform}`);
+  };
+
+  const handleAddToList = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (added) {
+      removeFromShortlist(profile.user_id);
+    } else {
+      addToShortlist(profile, platform);
+    }
   };
 
   return (
@@ -43,14 +57,15 @@ export function ProfileCard({
         <div className="text-sm text-gray-600">{profile.fullname}</div>
         <div className="text-sm">{formatFollowersLocal(profile.followers)}</div>
       </div>
-      {/* TODO: candidates must implement Add to List feature */}
-      {/* TODO: candidates must implement Add to List feature */}
       <button
-        disabled
-        className="px-3 py-1 bg-gray-300 text-gray-500 text-sm rounded cursor-not-allowed"
-        onClick={(e) => e.stopPropagation()}
+        onClick={handleAddToList}
+        className={`px-3 py-1 text-sm rounded ${
+          added
+            ? "bg-red-100 text-red-600 hover:bg-red-200"
+            : "bg-blue-600 text-white hover:bg-blue-700"
+        }`}
       >
-        Add to List
+        {added ? "Remove" : "Add to List"}
       </button>
     </div>
   );
