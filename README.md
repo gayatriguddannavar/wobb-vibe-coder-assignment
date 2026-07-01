@@ -79,8 +79,6 @@ Open `http://localhost:5173`
 
 ## Commands
 
-## Commands
-
 | Command | Description |
 |---|---|
 | `npm install` | Install project dependencies |
