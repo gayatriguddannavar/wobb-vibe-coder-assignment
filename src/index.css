@@ -1,27 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --void: #05060a;
+  --void-2: #0b0d16;
+  --panel: rgba(18, 20, 30, 0.72);
+  --panel-solid: #12141e;
+  --panel-border: rgba(255, 255, 255, 0.09);
+  --panel-border-hover: rgba(255, 255, 255, 0.2);
+  --sheen: rgba(255, 255, 255, 0.06);
+
+  --text: #9aa1b2;
+  --text-dim: #666d80;
+  --text-h: #f1f3f8;
+
+  --chrome: #d7dbe4;
+  --chrome-2: #9aa3b5;
+  --ion: #7dd3fc;
+  --ion-glow: rgba(125, 211, 252, 0.35);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --mono: ui-monospace, 'SF Mono', Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--text);
-  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -32,24 +38,64 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+::selection {
+  background: var(--ion-glow);
+  color: var(--text-h);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ion);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+html {
+  background: var(--void);
+}
+
+/* ---------------------------------------------------------------- */
+/* Dark 3D starfield: two hand-placed dot layers at different tile   */
+/* sizes/opacities to fake depth (near stars vs. far stars), plus a  */
+/* dark radial vignette so the corners read as pure void. No blur.  */
+/* ---------------------------------------------------------------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--void);
+  background-image:
+    /* near stars — brighter, larger tile spacing */
+    radial-gradient(1.6px 1.6px at 12% 18%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1.2px 1.2px at 78% 8%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.8px 1.8px at 45% 32%, rgba(255,255,255,0.85), transparent),
+    radial-gradient(1.3px 1.3px at 90% 60%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 25% 75%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.2px 1.2px at 62% 88%, rgba(255,255,255,0.65), transparent),
+    radial-gradient(1.7px 1.7px at 8% 55%, rgba(255,255,255,0.75), transparent),
+    /* far stars — dimmer, smaller, denser tile */
+    radial-gradient(1px 1px at 20% 20%, rgba(200,210,230,0.5), transparent),
+    radial-gradient(1px 1px at 60% 40%, rgba(200,210,230,0.4), transparent),
+    radial-gradient(1px 1px at 85% 85%, rgba(200,210,230,0.45), transparent),
+    radial-gradient(1px 1px at 35% 65%, rgba(200,210,230,0.35), transparent),
+    radial-gradient(1px 1px at 95% 15%, rgba(200,210,230,0.4), transparent),
+    /* dark vignette + faint ion-blue nebula tint */
+    radial-gradient(1200px circle at 50% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
+    radial-gradient(1000px circle at 50% 100%, rgba(90, 60, 140, 0.05), transparent 60%),
+    radial-gradient(140% 100% at 50% 50%, var(--void-2), var(--void) 75%);
+  background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat,
+    repeat, repeat, repeat, repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-size:
+    340px 340px, 340px 340px, 340px 340px, 340px 340px, 340px 340px,
+    340px 340px, 340px 340px, 180px 180px, 180px 180px, 180px 180px,
+    180px 180px, 180px 180px, auto, auto, auto;
+  background-attachment: fixed;
+}
+
+* {
+  scrollbar-color: var(--chrome-2) transparent;
 }
 
 #root {
@@ -57,15 +103,10 @@
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-}
-
-body {
-  margin: 0;
 }
 
 h1,
@@ -109,5 +150,196 @@ code {
   font-size: 15px;
   line-height: 135%;
   padding: 4px 8px;
-  background: var(--code-bg);
+  background: var(--panel-solid);
+}
+
+/* ---------------------------------------------------------------- */
+/* Mirror-glass primitives — crisp, not foggy. No backdrop-filter:   */
+/* blur anywhere. "Glass" is sold via a translucent tinted panel,   */
+/* a thin light border, and a soft diagonal sheen highlight along   */
+/* the top edge, like light catching a pane of dark glass.          */
+/* ---------------------------------------------------------------- */
+
+.mirror-nav {
+  background: var(--panel);
+  border-bottom: 1px solid var(--panel-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.mirror-panel {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.mirror-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, var(--sheen) 0%, transparent 28%);
+  pointer-events: none;
+}
+
+.mirror-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 16px 32px -20px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  transition: border-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.mirror-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, var(--sheen) 0%, transparent 32%);
+  pointer-events: none;
+}
+
+.mirror-card--interactive:hover {
+  border-color: var(--panel-border-hover);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.65);
+}
+
+.stat-tile {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  transition: border-color 0.12s ease;
+}
+
+.stat-tile:hover {
+  border-color: var(--panel-border-hover);
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  transition: filter 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.btn-chrome {
+  background: linear-gradient(180deg, var(--chrome) 0%, var(--chrome-2) 100%);
+  color: #0b0d16;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-chrome:hover {
+  filter: brightness(1.08);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-h);
+  border: 1px solid var(--panel-border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--panel-border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+}
+
+.btn-danger:hover {
+  background: rgba(248, 113, 113, 0.18);
+}
+
+.input-mirror {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--text-h);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.input-mirror::placeholder {
+  color: var(--text-dim);
+}
+
+.input-mirror:focus {
+  outline: none;
+  border-color: var(--ion);
+  box-shadow: 0 0 0 3px var(--ion-glow);
+}
+
+.tab-mirror {
+  border-radius: 8px;
+  font-weight: 500;
+  color: var(--text);
+  border: 1px solid transparent;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.tab-mirror:hover {
+  color: var(--text-h);
+}
+
+.tab-mirror[data-active="true"] {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-h);
+  border-color: var(--panel-border);
+}
+
+.avatar-ring {
+  padding: 2px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--chrome), var(--chrome-2));
+}
+
+.avatar-ring > img {
+  display: block;
+  border: 2px solid var(--void-2);
+  border-radius: 999px;
+}
+
+.text-muted {
+  color: var(--text);
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+.text-heading {
+  color: var(--text-h);
+}
+
+.mono-stat {
+  font-family: var(--mono);
+  letter-spacing: -0.2px;
+}
+
+.badge-verified {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  border-radius: 999px;
+  background: var(--ion);
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mirror-card,
+  .btn,
+  .tab-mirror,
+  .input-mirror {
+    transition: none;
+  }
 }

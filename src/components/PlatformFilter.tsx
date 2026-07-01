@@ -15,28 +15,29 @@ export function PlatformFilter({
   onSearchChange,
 }: PlatformFilterProps) {
   return (
-    <div className="mb-4">
-      <div className="flex gap-2 justify-center mb-3">
+    <div className="mb-6">
+      <div className="mirror-panel inline-flex gap-1 p-1 mb-4">
         {PLATFORMS.map((p) => (
           <button
             key={p}
             type="button"
             onClick={() => onChange(p)}
-            className={`px-4 py-2 border rounded ${
-              selected === p ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
+            data-active={selected === p}
+            className="tab-mirror relative px-4 py-1.5 text-sm"
           >
             {getPlatformLabel(p)}
           </button>
         ))}
       </div>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => onSearchChange(e.target.value)}
-        placeholder="Search by username or name..."
-        className="w-full max-w-md border px-3 py-2 rounded"
-      />
+      <div>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => onSearchChange(e.target.value)}
+          placeholder="Search by username or name..."
+          className="input-mirror w-full max-w-md px-4 py-2.5 text-sm"
+        />
+      </div>
     </div>
   );
 }

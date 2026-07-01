@@ -48,24 +48,26 @@ export const ProfileCard = React.memo(function ProfileCard({
   return (
     <div
       onClick={handleClick}
-      className="flex items-center gap-3 p-3 border border-gray-300 mb-2 cursor-pointer hover:bg-gray-50 w-full max-w-2xl"
+      className="mirror-card mirror-card--interactive flex items-center gap-4 p-4 cursor-pointer w-full"
       data-search={searchQuery}
     >
-      <img src={profile.picture} className="w-12 h-12 rounded-full" />
-      <div className="text-left flex-1">
-        <div className="font-bold">
+      <div className="avatar-ring shrink-0">
+        <img src={profile.picture} className="w-12 h-12 object-cover" />
+      </div>
+      <div className="text-left flex-1 min-w-0">
+        <div className="font-semibold text-heading truncate flex items-center">
           @{profile.username}
           <VerifiedBadge verified={profile.is_verified} />
         </div>
-        <div className="text-sm text-gray-600">{profile.fullname}</div>
-        <div className="text-sm">{formatFollowersLocal(profile.followers)}</div>
+        <div className="text-sm text-muted truncate">{profile.fullname}</div>
+        <div className="mono-stat text-sm text-dim mt-0.5">
+          {formatFollowersLocal(profile.followers)}
+        </div>
       </div>
       <button
         onClick={handleAddToList}
-        className={`px-3 py-1 text-sm rounded ${
-          added
-            ? "bg-red-100 text-red-600 hover:bg-red-200"
-            : "bg-blue-600 text-white hover:bg-blue-700"
+        className={`btn shrink-0 px-3.5 py-1.5 text-sm ${
+          added ? "btn-danger" : "btn-chrome"
         }`}
       >
         {added ? "Remove" : "Add to List"}

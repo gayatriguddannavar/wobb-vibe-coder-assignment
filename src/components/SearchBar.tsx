@@ -6,7 +6,7 @@ interface SearchBarProps {
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <input
-      className="border p-2 w-80"
+      className="input-mirror px-4 py-2.5 w-80 text-sm"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Search influencers..."

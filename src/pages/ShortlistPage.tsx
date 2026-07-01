@@ -14,40 +14,47 @@ export function ShortlistPage() {
 
   return (
     <Layout title="My Shortlist">
-      <Link to="/" className="text-sm text-blue-600 mb-4 inline-block">
+      <Link
+        to="/"
+        className="text-sm mb-5 inline-block hover:opacity-75 transition-opacity"
+        style={{ color: "var(--ion)" }}
+      >
         ← Back to search
       </Link>
 
       {shortlist.length === 0 ? (
-        <p className="text-gray-500 mt-4">
-          No profiles added yet. Go back to search and click "Add to List" on
-          any profile.
-        </p>
+        <div className="mirror-panel p-8 text-center">
+          <p className="text-muted">
+            No profiles added yet. Go back to search and click "Add to List"
+            on any profile.
+          </p>
+        </div>
       ) : (
-        <div className="flex flex-col items-center gap-2 mt-4">
+        <div className="flex flex-col gap-3">
           {shortlist.map(({ profile, platform }) => (
             <div
               key={profile.user_id}
-              className="flex items-center gap-3 p-3 border border-gray-300 rounded w-full max-w-2xl"
+              className="mirror-card flex items-center gap-4 p-4 w-full"
             >
-              <img
-                src={profile.picture}
-                className="w-12 h-12 rounded-full"
-              />
-              <div className="text-left flex-1">
-                <div className="font-bold">
+              <div className="avatar-ring shrink-0">
+                <img src={profile.picture} className="w-12 h-12 object-cover" />
+              </div>
+              <div className="text-left flex-1 min-w-0">
+                <div className="font-semibold text-heading truncate flex items-center">
                   @{profile.username}
                   <VerifiedBadge verified={profile.is_verified} />
                 </div>
-                <div className="text-sm text-gray-600">{profile.fullname}</div>
-                <div className="text-sm">
+                <div className="text-sm text-muted truncate">
+                  {profile.fullname}
+                </div>
+                <div className="mono-stat text-sm text-dim mt-0.5">
                   {formatFollowers(profile.followers)} followers ·{" "}
                   <span className="capitalize">{platform}</span>
                 </div>
               </div>
               <button
                 onClick={() => removeFromShortlist(profile.user_id)}
-                className="px-3 py-1 bg-red-100 text-red-600 text-sm rounded hover:bg-red-200"
+                className="btn btn-danger shrink-0 px-3.5 py-1.5 text-sm"
               >
                 Remove
               </button>

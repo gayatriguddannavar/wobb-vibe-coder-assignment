@@ -44,7 +44,7 @@ export function ProfileDetailPage() {
   if (!loaded) {
     return (
       <Layout title={`@${username}`}>
-        <p className="text-gray-400">Loading...</p>
+        <p className="text-muted">Loading...</p>
       </Layout>
     );
   }
@@ -52,10 +52,10 @@ export function ProfileDetailPage() {
   if (!profileData) {
     return (
       <Layout title={`@${username}`}>
-        <p className="text-red-600 mb-4">
+        <p className="mb-4" style={{ color: "var(--danger)" }}>
           Could not load profile details for {username}
         </p>
-        <Link to="/" className="text-blue-600 underline">
+        <Link to="/" className="underline" style={{ color: "var(--ion)" }}>
           Back to search
         </Link>
       </Layout>
@@ -67,108 +67,118 @@ export function ProfileDetailPage() {
 
   return (
     <Layout title={user.fullname}>
-      <Link to="/" className="text-sm text-blue-600 mb-4 inline-block">
+      <Link
+        to="/"
+        className="text-sm mb-5 inline-block hover:opacity-75 transition-opacity"
+        style={{ color: "var(--ion)" }}
+      >
         ← Back to search
       </Link>
 
-      <div className="flex gap-6 items-start text-left max-w-2xl mx-auto">
-        <img
-          src={user.picture}
-          className="w-24 h-24 rounded-full border"
-        />
-        <div className="flex-1">
-          <h2 className="text-xl font-bold">
-            @{user.username}
-            <VerifiedBadge verified={user.is_verified} />
-          </h2>
-          <p className="text-gray-600">{user.fullname}</p>
-          <p className="text-xs text-gray-400 mt-1">Platform: {platform}</p>
-
-          {user.description && (
-            <p className="mt-3 text-sm text-gray-700">{user.description}</p>
-          )}
-
-          <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-            <div className="border p-2 rounded">
-              <div className="text-gray-500">Followers</div>
-              <div className="font-semibold">
-                {formatFollowersDetail(user.followers)}
-              </div>
-            </div>
-            <div className="border p-2 rounded">
-              <div className="text-gray-500">Engagement Rate</div>
-              <div className="font-semibold">
-                {user.engagement_rate !== undefined
-                  ? formatEngagementRate(user.engagement_rate)
-                  : "N/A"}
-              </div>
-            </div>
-            {user.posts_count !== undefined && (
-              <div className="border p-2 rounded">
-                <div className="text-gray-500">Posts</div>
-                <div className="font-semibold">{user.posts_count}</div>
-              </div>
-            )}
-            {user.avg_likes !== undefined && (
-              <div className="border p-2 rounded">
-                <div className="text-gray-500">Avg Likes</div>
-                <div className="font-semibold">
-                  {formatFollowersDetail(user.avg_likes)}
-                </div>
-              </div>
-            )}
-            {user.avg_comments !== undefined && (
-              <div className="border p-2 rounded">
-                <div className="text-gray-500">Avg Comments</div>
-                <div className="font-semibold">{user.avg_comments}</div>
-              </div>
-            )}
-            {user.avg_views !== undefined && user.avg_views > 0 && (
-              <div className="border p-2 rounded">
-                <div className="text-gray-500">Avg Views</div>
-                <div className="font-semibold">
-                  {formatFollowersDetail(user.avg_views)}
-                </div>
-              </div>
-            )}
-            {user.engagements !== undefined && (
-              <div className="border p-2 rounded">
-                <div className="text-gray-500">Engagements</div>
-                <div className="font-semibold">
-                  {user.engagements.toLocaleString()}
-                </div>
-              </div>
-            )}
+      <div className="mirror-panel text-left max-w-2xl mx-auto p-6">
+        <div className="flex gap-5 items-start">
+          <div className="avatar-ring shrink-0">
+            <img src={user.picture} className="w-20 h-20 object-cover" />
           </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-heading flex items-center">
+              @{user.username}
+              <VerifiedBadge verified={user.is_verified} />
+            </h2>
+            <p className="text-muted">{user.fullname}</p>
+            <p className="text-xs text-dim mt-1 capitalize">
+              Platform: {platform}
+            </p>
 
-          {user.url && (
-            <a
-              href={user.url}
-              target="_blank"
-              className="inline-block mt-4 text-blue-600 text-sm"
+            {user.description && (
+              <p className="mt-3 text-sm text-muted">{user.description}</p>
+            )}
+
+            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+              <div className="stat-tile p-3">
+                <div className="text-dim text-xs mb-0.5">Followers</div>
+                <div className="mono-stat font-semibold text-heading">
+                  {formatFollowersDetail(user.followers)}
+                </div>
+              </div>
+              <div className="stat-tile p-3">
+                <div className="text-dim text-xs mb-0.5">Engagement Rate</div>
+                <div className="mono-stat font-semibold text-heading">
+                  {user.engagement_rate !== undefined
+                    ? formatEngagementRate(user.engagement_rate)
+                    : "N/A"}
+                </div>
+              </div>
+              {user.posts_count !== undefined && (
+                <div className="stat-tile p-3">
+                  <div className="text-dim text-xs mb-0.5">Posts</div>
+                  <div className="mono-stat font-semibold text-heading">
+                    {user.posts_count}
+                  </div>
+                </div>
+              )}
+              {user.avg_likes !== undefined && (
+                <div className="stat-tile p-3">
+                  <div className="text-dim text-xs mb-0.5">Avg Likes</div>
+                  <div className="mono-stat font-semibold text-heading">
+                    {formatFollowersDetail(user.avg_likes)}
+                  </div>
+                </div>
+              )}
+              {user.avg_comments !== undefined && (
+                <div className="stat-tile p-3">
+                  <div className="text-dim text-xs mb-0.5">Avg Comments</div>
+                  <div className="mono-stat font-semibold text-heading">
+                    {user.avg_comments}
+                  </div>
+                </div>
+              )}
+              {user.avg_views !== undefined && user.avg_views > 0 && (
+                <div className="stat-tile p-3">
+                  <div className="text-dim text-xs mb-0.5">Avg Views</div>
+                  <div className="mono-stat font-semibold text-heading">
+                    {formatFollowersDetail(user.avg_views)}
+                  </div>
+                </div>
+              )}
+              {user.engagements !== undefined && (
+                <div className="stat-tile p-3">
+                  <div className="text-dim text-xs mb-0.5">Engagements</div>
+                  <div className="mono-stat font-semibold text-heading">
+                    {user.engagements.toLocaleString()}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {user.url && (
+              <a
+                href={user.url}
+                target="_blank"
+                className="inline-block mt-4 text-sm hover:opacity-75 transition-opacity"
+                style={{ color: "var(--ion)" }}
+              >
+                View on platform →
+              </a>
+            )}
+
+            {/* TODO: candidates must implement Add to List feature */}
+            {/* TODO: candidates must implement Add to List feature */}
+            <button
+              onClick={() => {
+                if (added) {
+                  removeFromShortlist(user.user_id);
+                } else {
+                  addToShortlist(user, platform as Platform);
+                }
+              }}
+              className={`btn block mt-5 px-4 py-2 text-sm ${
+                added ? "btn-danger" : "btn-chrome"
+              }`}
             >
-              View on platform →
-            </a>
-          )}
-
-          {/* TODO: candidates must implement Add to List feature */}
-          {/* TODO: candidates must implement Add to List feature */}
-        <button
-        onClick={() => {
-          if (added) {
-            removeFromShortlist(user.user_id);
-          } else {
-            addToShortlist(user, platform as Platform);
-          }
-        }}
-        className={`block mt-4 px-4 py-2 rounded text-sm ${
-          added
-            ? "bg-red-100 text-red-600 hover:bg-red-200"
-            : "bg-blue-600 text-white hover:bg-blue-700"
-        }`}
-      >
-        {added ? "Remove from List" : "Add to List"}
-      </button>
+              {added ? "Remove from List" : "Add to List"}
+            </button>
+          </div>
         </div>
       </div>
     </Layout>
