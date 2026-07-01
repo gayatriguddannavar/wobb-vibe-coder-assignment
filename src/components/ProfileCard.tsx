@@ -1,7 +1,10 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { VerifiedBadge } from "./ui/VerifiedBadge";
 import { useShortlistStore } from "@/store/useShortlistStore";
+
+
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
@@ -16,7 +19,7 @@ function formatFollowersLocal(count: number) {
   return count + " followers";
 }
 
-export function ProfileCard({
+export const ProfileCard = React.memo(function ProfileCard({
   profile,
   platform,
   searchQuery,
@@ -69,4 +72,4 @@ export function ProfileCard({
       </button>
     </div>
   );
-}
+});

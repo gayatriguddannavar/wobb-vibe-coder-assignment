@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
@@ -8,13 +8,25 @@ import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
 export function SearchPage() {
   const [platform, setPlatform] = useState<Platform>("instagram");
   const [searchQuery, setSearchQuery] = useState("");
-  
-  const allProfiles = extractProfiles(platform);
-  const filtered = filterProfiles(allProfiles, searchQuery);
 
-  const handleProfileClick = (username: string) => {
+  // useMemo means: only re-run extractProfiles when platform changes
+  // not on every single keystroke
+  const allProfiles = useMemo(
+    () => extractProfiles(platform),
+    [platform]
+  );
+
+  // useMemo means: only re-filter when allProfiles or searchQuery changes
+  const filtered = useMemo(
+    () => filterProfiles(allProfiles, searchQuery),
+    [allProfiles, searchQuery]
+  );
+
+  // useCallback means: this function reference stays stable
+  // so ProfileList doesn't re-render unnecessarily
+  const handleProfileClick = useCallback((username: string) => {
     console.log("Clicked profile:", username);
-  };
+  }, []);
 
   return (
     <Layout title="Find Influencers">
