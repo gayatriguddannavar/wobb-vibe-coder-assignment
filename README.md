@@ -2,6 +2,8 @@
 
 A polished influencer search application built with React, TypeScript, Vite, and Tailwind CSS.
 
+Live Demo: https://gayatriguddannavar.github.io/wobb-vibe-coder-assignment/ 
+
 ## What I Changed
 
 ### 1. Bug Fixes
@@ -75,3 +77,15 @@ npm run dev
 
 Open `http://localhost:5173`
 
+## Commands
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `npm install` | Install project dependencies |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the project for production |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Preview the production build locally |
+| `npm run deploy` | Deploy the production build to GitHub Pages |
