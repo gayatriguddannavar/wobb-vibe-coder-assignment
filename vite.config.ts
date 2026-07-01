@@ -5,7 +5,10 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/wobb-vibe-coder-assignment/",
+
   plugins: [react(), tailwindcss()],
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
