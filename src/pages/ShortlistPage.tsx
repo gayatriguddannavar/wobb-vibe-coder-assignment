@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
-import { VerifiedBadge } from "@/components/VerifiedBadge";
+import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
 import { useShortlistStore } from "@/store/useShortlistStore";
 
 function formatFollowers(count: number) {

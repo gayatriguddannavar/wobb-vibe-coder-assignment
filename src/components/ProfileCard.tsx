@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
-import { VerifiedBadge } from "./VerifiedBadge";
+import { VerifiedBadge } from "./ui/VerifiedBadge";
 import { useShortlistStore } from "@/store/useShortlistStore";
 
 interface ProfileCardProps {
