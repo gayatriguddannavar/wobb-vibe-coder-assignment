@@ -11,7 +11,7 @@ const ProfileDetailPage = lazy(() =>
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/wobb-vibe-coder-assignment">
       <Suspense fallback={<div className="p-8 text-gray-400">Loading...</div>}>
         <Routes>
           <Route path="/" element={<SearchPage />} />
